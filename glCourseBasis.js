@@ -11,7 +11,7 @@ var mvMatrix = mat4.create();
 var pMatrix = mat4.create();
 var objMatrix = mat4.create();
 mat4.identity(objMatrix);
-var listeImage = ["image_mouton2.jpg", "image_mouton.jpg", "index.jpg"];
+var listeImage = ["image_mouton2.jpg", "image_mouton.jpg", "index.jpg", "test1.jpg", "test2.jpg", "test3.jpg"];
 var listeTexture = [];
 
 
@@ -214,7 +214,7 @@ function drawScene() {
 		zPos = (listeImage.length/2*0.1)
 		setzPosUniform(zPos);
 		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
-		gl.bindTexture(gl.TEXTURE_2D, listeTexture[0]);
+		//gl.bindTexture(gl.TEXTURE_2D, listeTexture[0]);
         mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
 		mat4.identity(mvMatrix);
 		mat4.translate(mvMatrix, [0.0, 0.0, -2.0]);
@@ -223,17 +223,17 @@ function drawScene() {
 		setMatrixUniforms();
 
 		//gl.drawElements(gl.TRIANGLE_FAN, indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
-		gl.drawElements(gl.TRIANGLES, indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
+		//gl.drawElements(gl.TRIANGLES, indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
 		//gl.drawArrays(gl.TRIANGLE_FAN, 0, vertexBuffer.numItems);
 
 		for (i=0; i<listeImage.length; i++){
 			
+			gl.bindTexture(gl.TEXTURE_2D, listeTexture[i]);
+			gl.drawElements(gl.TRIANGLES, indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
 			zPos -= 0.1;
 			setzPosUniform(zPos);
 			mat4.translate(mvMatrix, [0.0, 0.0, 0.0]);
 			setMatrixUniforms();
-			gl.bindTexture(gl.TEXTURE_2D, listeTexture[i]);
-			gl.drawElements(gl.TRIANGLES, indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
 		}
 	}
 }
