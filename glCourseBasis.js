@@ -11,10 +11,19 @@ var mvMatrix = mat4.create();
 var pMatrix = mat4.create();
 var objMatrix = mat4.create();
 mat4.identity(objMatrix);
-var listeImage = ["cerveau/023.gif", "cerveau/024.gif", "cerveau/025.gif", "cerveau/026.gif", "cerveau/027.gif", "cerveau/028.gif", "cerveau/029.gif", "cerveau/030.gif", "cerveau/031.gif"];
+var listeImage = [] // ["cerveau/023.gif", "cerveau/024.gif", "cerveau/025.gif", "cerveau/026.gif", "cerveau/027.gif", "cerveau/028.gif", "cerveau/029.gif", "cerveau/030.gif", "cerveau/031.gif"];
 var listeTexture = [];
 var dzPos = 0.02;
 
+// =====================================================
+function getImages(dir, fileExtension, firstImg, nbImg){
+
+	for (i=firstImg; i <(nbImg+firstImg); i++){
+		path = dir + "/" + i + fileExtension;
+		listeImage.push(path);
+		console.log(path);
+	}
+}
 
 
 
@@ -27,6 +36,8 @@ function webGLStart() {
 
 	initGL(canvas);
 	initBuffers();
+
+	getImages("cerveau", ".gif", 23, 25);
     
     for (i=0; i<listeImage.length; i++){ 
         listeTexture.push(gl.createTexture());
@@ -49,8 +60,8 @@ function initGL(canvas) //permet de lier carte graph au canva
 		gl.viewportWidth = canvas.width;
 		gl.viewportHeight = canvas.height;
 		gl.viewport(0, 0, canvas.width, canvas.height); //l'endroit où la carte grap peut dessiner dans le canva (ici il dessine dans tout le canva)
-		//gl.enable(gl.DEPTH_TEST);
-		gl.cullFace(gl.BACK)
+		gl.enable(gl.DEPTH_TEST);
+		gl.cullFace(gl.BACK);
 		gl.enable(gl.BLEND);
         gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
 	} catch (e) {}
