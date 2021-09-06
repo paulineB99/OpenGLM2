@@ -11,6 +11,8 @@ var mvMatrix = mat4.create();
 var pMatrix = mat4.create();
 var objMatrix = mat4.create();
 mat4.identity(objMatrix);
+var listeImage = ["image_mouton2.jpg", "image_mouton.jpg", "index.jpg"];
+var listeTexture = [];
 
 
 
@@ -23,8 +25,11 @@ function webGLStart() {
 
 	initGL(canvas);
 	initBuffers();
-	initTexture("image_mouton2.jpg");
-	initTexture2();
+   
+    for (i=0; i<listeImage.length; i++){ 
+        listeTexture.push(gl.createTexture());
+        initTexture(listeImage[i], listeTexture[i]);
+    }
 	loadShaders('shader');
 
 	gl.clearColor(0.7, 0.7, 0.7, 1.0);
@@ -86,12 +91,12 @@ function initBuffers() { //c'est la géométrie
 
 
 // =====================================================
-function initTexture(tewImageToTexture)
+function initTexture(tewImageToTexture, texture)
 {
 	var texImage = new Image();
 	texImage.src = tewImageToTexture;//on dit l'image qui nous interesse 
 
-	texture = gl.createTexture();
+	//texture = gl.createTexture();
 	texture.image = texImage;
 
 	texImage.onload = function () {//on appel quand le navigateur aura pu charger l'image. On dit comment la texture va etre traitée
@@ -104,53 +109,6 @@ function initTexture(tewImageToTexture)
 		gl.activeTexture(gl.TEXTURE0);
 	}
 }
-
-// =====================================================
-/* function initTexture2()
-{
-	var listeTexImage = ["image_mouton2.jpg", "image_mouton.jpg"];
-	var listeTexture = [];
-	for (i=0; i<listeTexImage.length(); i++){
-		var texImage = new Image();
-		texImage.src = "image_mouton.jpg";//on dit l'image qui nous interesse 
-
-		texture2 = gl.createTexture();
-		texture2.image = texImage;
-
-		listeTexture.push(texture2);
-
-		texImage.onload = function () {//on appel quand le navigateur aura pu charger l'image. On dit comment la texture va etre traitée
-			gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-			gl.bindTexture(gl.TEXTURE_2D, texture2);
-			gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture2.image); //là on envoie l'image sur la carte graphique
-			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR); //linear ou nearest
-			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-			gl.uniform1i(shaderProgram.samplerUniform, 0);
-			gl.activeTexture(gl.TEXTURE0);
-		}
-	}
-} */
-
-// =====================================================
-function initTexture2()
-{
-	var texImage = new Image();
-	texImage.src = "image_mouton.jpg";//on dit l'image qui nous interesse 
-
-	texture2 = gl.createTexture();
-	texture2.image = texImage;
-
-	texImage.onload = function () {//on appel quand le navigateur aura pu charger l'image. On dit comment la texture va etre traitée
-		gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-		gl.bindTexture(gl.TEXTURE_2D, texture2);
-		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture2.image); //là on envoie l'image sur la carte graphique
-		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR); //linear ou nearest
-		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-		gl.uniform1i(shaderProgram.samplerUniform, 0);
-		gl.activeTexture(gl.TEXTURE0);
-	}
-}
-
 
 // =====================================================
 function loadShaders(shader) {//charge les shader .vs et .fs
@@ -254,8 +212,8 @@ function drawScene() {
 	if(shaderProgram != null) {
 
 		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
-		gl.bindTexture(gl.TEXTURE_2D, texture);
-		mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
+		gl.bindTexture(gl.TEXTURE_2D, listeTexture[0]);
+        mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
 		mat4.identity(mvMatrix);
 		mat4.translate(mvMatrix, [0.0, 0.0, -2.0]);
 		mat4.multiply(mvMatrix, objMatrix);
@@ -269,17 +227,10 @@ function drawScene() {
 		gl.drawElements(gl.TRIANGLES, indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
 		//gl.drawArrays(gl.TRIANGLE_FAN, 0, vertexBuffer.numItems);
 
-		for (i=0; i<4; i++){
-			
-			//zPos = zPos + 0.1;
-			//setzPosUniform(zPos);
+		for (i=0; i<listeImage.length; i++){
 			mat4.translate(mvMatrix, [0.0, 0.0, -0.1]);
 			setMatrixUniforms();
-			//initTexture2();
-			
-			//gl.bindTexture(gl.TEXTURE_2D, listeTexture[i]);
-			gl.bindTexture(gl.TEXTURE_2D, texture2);
-
+			gl.bindTexture(gl.TEXTURE_2D, listeTexture[i]);
 			gl.drawElements(gl.TRIANGLES, indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
 		}
 	}
