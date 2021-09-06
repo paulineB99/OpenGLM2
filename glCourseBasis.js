@@ -13,6 +13,7 @@ var objMatrix = mat4.create();
 mat4.identity(objMatrix);
 var listeImage = ["image_mouton2.jpg", "image_mouton.jpg", "index.jpg", "test1.jpg", "test2.jpg", "test3.jpg"];
 var listeTexture = [];
+var dzPos = 0.1;
 
 
 
@@ -47,6 +48,10 @@ function initGL(canvas) //permet de lier carte graph au canva
 		gl.viewportWidth = canvas.width;
 		gl.viewportHeight = canvas.height;
 		gl.viewport(0, 0, canvas.width, canvas.height); //l'endroit où la carte grap peut dessiner dans le canva (ici il dessine dans tout le canva)
+		gl.enable(gl.DEPTH_TEST);
+		gl.cullFace(gl.BACK)
+		gl.enable(gl.BLEND);
+        gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
 	} catch (e) {}
 	if (!gl) {
 		console.log("Could not initialise WebGL");
@@ -191,16 +196,10 @@ function initShaders(vShaderTxt,fShaderTxt) {//il doit lire les 2 fichiers sur l
 
 
 // =====================================================
-function setMatrixUniforms() {
+function setMatrixUniforms(zPos) {
 	if(shaderProgram != null) {
 		gl.uniformMatrix4fv(shaderProgram.pMatrixUniform, false, pMatrix);
 		gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, mvMatrix);
-	}
-}
-
-// =====================================================
-function setzPosUniform(zPos) {
-	if(shaderProgram != null) {
 		gl.uniform1f(shaderProgram.zPosUniform, zPos);
 	}
 }
@@ -210,9 +209,7 @@ function drawScene() {
 	gl.clear(gl.COLOR_BUFFER_BIT);
 
 	if(shaderProgram != null) {
-
-		zPos = (listeImage.length/2*0.1)
-		setzPosUniform(zPos);
+		zPos = -(listeImage.length/2*dzPos);
 		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
 		//gl.bindTexture(gl.TEXTURE_2D, listeTexture[0]);
         mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
@@ -220,7 +217,7 @@ function drawScene() {
 		mat4.translate(mvMatrix, [0.0, 0.0, -2.0]);
 		mat4.multiply(mvMatrix, objMatrix);
 
-		setMatrixUniforms();
+		setMatrixUniforms(zPos);
 
 		//gl.drawElements(gl.TRIANGLE_FAN, indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
 		//gl.drawElements(gl.TRIANGLES, indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
@@ -230,10 +227,9 @@ function drawScene() {
 			
 			gl.bindTexture(gl.TEXTURE_2D, listeTexture[i]);
 			gl.drawElements(gl.TRIANGLES, indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
-			zPos -= 0.1;
-			setzPosUniform(zPos);
+			zPos += dzPos;
 			mat4.translate(mvMatrix, [0.0, 0.0, 0.0]);
-			setMatrixUniforms();
+			setMatrixUniforms(zPos);
 		}
 	}
 }
