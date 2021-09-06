@@ -223,11 +223,11 @@ function initShaders(vShaderTxt,fShaderTxt) {//il doit lire les 2 fichiers sur l
 	
 	gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
 	gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute,
-     	vertexBuffer.itemSize, gl.FLOAT, false, 0, 0);
+    	vertexBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
 	gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer);
 	gl.vertexAttribPointer(shaderProgram.texCoordsAttribute,
-      	texCoordBuffer.itemSize, gl.FLOAT, false, 0, 0);
+    	texCoordBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
 }
 
@@ -243,7 +243,7 @@ function setMatrixUniforms() {
 // =====================================================
 function setzPosUniform(zPos) {
 	if(shaderProgram != null) {
-		gl.uniform1f(shaderProgram.zPosUniform, false, zPos);
+		gl.uniform1f(shaderProgram.zPosUniform, zPos);
 	}
 }
 
@@ -253,6 +253,8 @@ function drawScene() {
 
 	if(shaderProgram != null) {
 
+		zPos = (10/2*0.1)
+		setzPosUniform(zPos);
 		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
 		gl.bindTexture(gl.TEXTURE_2D, texture);
 		mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
@@ -262,18 +264,15 @@ function drawScene() {
 
 		setMatrixUniforms();
 
-		zPos = (5/2)*0.1;
-		setzPosUniform(zPos);
-
 		//gl.drawElements(gl.TRIANGLE_FAN, indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
 		gl.drawElements(gl.TRIANGLES, indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
 		//gl.drawArrays(gl.TRIANGLE_FAN, 0, vertexBuffer.numItems);
 
-		for (i=0; i<4; i++){
+		for (i=0; i<9; i++){
 			
-			//zPos = zPos + 0.1;
-			//setzPosUniform(zPos);
-			mat4.translate(mvMatrix, [0.0, 0.0, -0.1]);
+			zPos -= 0.1;
+			setzPosUniform(zPos);
+			mat4.translate(mvMatrix, [0.0, 0.0, 0.0]);
 			setMatrixUniforms();
 			//initTexture2();
 			
