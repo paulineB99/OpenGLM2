@@ -36,6 +36,12 @@ function degToRad(degrees) {
 }
 
 // =====================================================
+function handleMouseWheel(event) {
+
+	distCENTER[2] += event.deltaY/100.0;
+}
+
+// =====================================================
 function handleMouseDown(event) {
 	mouseDown = true;
 	lastMouseX = event.clientX;
@@ -60,12 +66,20 @@ function handleMouseMove(event) {
 	var deltaX = newX - lastMouseX;
 	var deltaY = newY - lastMouseY;
 
-	rotY += degToRad(deltaX / 2);
-	rotX += degToRad(deltaY / 2);
+	if(event.shiftKey) {
+		distCENTER[2] += deltaY/100.0;
+	} else if(event.ctrlKey) {
+		distCENTER[0] += deltaX/150;
+		distCENTER[1] += deltaY/-150;
+	} 
+	else {
+		rotY += degToRad(deltaX / 5);
+		rotX += degToRad(deltaY / 5);
 
-	mat4.identity(objMatrix);
-	mat4.rotate(objMatrix, rotX, [1, 0, 0]);
-	mat4.rotate(objMatrix, rotY, [0, 1, 0]);
+		mat4.identity(objMatrix);
+		mat4.rotate(objMatrix, rotX, [1, 0, 0]);
+		mat4.rotate(objMatrix, rotY, [0, 1, 0]);
+	}
 
 	lastMouseX = newX
 	lastMouseY = newY;

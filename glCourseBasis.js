@@ -16,6 +16,8 @@ var listeTexture = [];
 var dzPos = 0.02;
 var alpha = 0.5;
 var choixContour = 0.0;
+var distCENTER;
+var posCENTER = [0,0,0];
 
 // =====================================================
 function getImages(dir, fileExtension, name, firstImg, nbImg){
@@ -34,8 +36,10 @@ function webGLStart() {
 	canvas.onmousedown = handleMouseDown;
 	document.onmouseup = handleMouseUp;
 	document.onmousemove = handleMouseMove;
+	canvas.onwheel = handleMouseWheel;
 
 	initGL(canvas);
+	distCENTER = vec3.create([0,-0.2,-3]);
 	initBuffers();
 
 	getImages("image-00344", ".jpg", "/image-00", 000, 361);
@@ -213,6 +217,11 @@ function initShaders(vShaderTxt,fShaderTxt) {//il doit lire les 2 fichiers sur l
 // =====================================================
 function setMatrixUniforms(zPos) {
 	if(shaderProgram != null) {
+		mat4.identity(mvMatrix);
+		mat4.translate(mvMatrix, distCENTER);
+		mat4.multiply(mvMatrix, objMatrix);
+		mat4.translate(mvMatrix, posCENTER);
+
 		gl.uniformMatrix4fv(shaderProgram.pMatrixUniform, false, pMatrix);
 		gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, mvMatrix);
 		gl.uniform1f(shaderProgram.zPosUniform, zPos);
@@ -251,19 +260,13 @@ function drawScene() {
 	
 
 	if(shaderProgram != null) {
-		zPos = -((listeImage.length/2)*dzPos);
+		zPos = -(listeImage.length*0.5*dzPos);
+
 		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
-		//gl.bindTexture(gl.TEXTURE_2D, listeTexture[0]);
         mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
-		mat4.identity(mvMatrix);
-		mat4.translate(mvMatrix, [0.0, 0.0, -2.0]);
-		mat4.multiply(mvMatrix, objMatrix);
 
 		setMatrixUniforms(zPos);
 
-		//gl.drawElements(gl.TRIANGLE_FAN, indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
-		//gl.drawElements(gl.TRIANGLES, indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
-		//gl.drawArrays(gl.TRIANGLE_FAN, 0, vertexBuffer.numItems);
 		for (i=0; i<listeImage.length; i++){
 			
 			gl.bindTexture(gl.TEXTURE_2D, listeTexture[i]);
