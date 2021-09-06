@@ -14,6 +14,7 @@ mat4.identity(objMatrix);
 var listeImage = [] // ["cerveau/023.gif", "cerveau/024.gif", "cerveau/025.gif", "cerveau/026.gif", "cerveau/027.gif", "cerveau/028.gif", "cerveau/029.gif", "cerveau/030.gif", "cerveau/031.gif"];
 var listeTexture = [];
 var dzPos = 0.02;
+var alpha = 0.5;
 
 // =====================================================
 function getImages(dir, fileExtension, firstImg, nbImg){
@@ -195,6 +196,7 @@ function initShaders(vShaderTxt,fShaderTxt) {//il doit lire les 2 fichiers sur l
 	shaderProgram.mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
 	
 	shaderProgram.zPosUniform = gl.getUniformLocation(shaderProgram, "uzPos");
+	shaderProgram.alphaUniform = gl.getUniformLocation(shaderProgram, "uAlpha");
 	
 	gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
 	gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute,
@@ -213,6 +215,7 @@ function setMatrixUniforms(zPos) {
 		gl.uniformMatrix4fv(shaderProgram.pMatrixUniform, false, pMatrix);
 		gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, mvMatrix);
 		gl.uniform1f(shaderProgram.zPosUniform, zPos);
+		gl.uniform1f(shaderProgram.alphaUniform, alpha);
 	}
 }
 
@@ -222,6 +225,15 @@ function space_slider(){
 	dzPos = parseFloat(spaceSlider.value);
 	spaceSlider.oninput = function(){
 		dzPos = parseFloat(this.value);
+	}
+	drawScene();
+}
+
+function alpha_slider(){
+	var alpheSlider = document.getElementById("Transparence");
+	alpha = parseFloat(alpheSlider.value);
+	alpheSlider.oninput = function(){
+		alpha = parseFloat(this.value);
 	}
 	drawScene();
 }
@@ -244,7 +256,6 @@ function drawScene() {
 		//gl.drawElements(gl.TRIANGLE_FAN, indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
 		//gl.drawElements(gl.TRIANGLES, indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
 		//gl.drawArrays(gl.TRIANGLE_FAN, 0, vertexBuffer.numItems);
-		console.log(dzPos);
 		for (i=0; i<listeImage.length; i++){
 			
 			gl.bindTexture(gl.TEXTURE_2D, listeTexture[i]);
