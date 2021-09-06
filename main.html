@@ -24,7 +24,21 @@
 				<input type="range" min="0.001" max="0.25" step="0.001" onclick="space_slider()" value="0.02" class="slider" id="Espacement">
 				<h4>Transparence</h4>
 				<input type="range" min="0.01" max="1" step="0.01" onclick="alpha_slider()" value="0.02" class="slider" id="Transparence">
+
+                <h4>Affichage des contours</h4> 
+                <div>
+                    <div>
+                        <input type="radio" id="notShow" name="obj" value="0.0" oninput="setChoixContour(this.value)" style = float:right>
+                        <label for="notShow">Ne pas afficher le noir</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="show" name="obj" value="1.0" oninput="setChoixContour(this.value)" style = text-align:right>
+                        <label for="show">Afficher le noir</label>
+                    </div>
+                </div>
 			</th>
+        </tr>
+    </table>
 </body>
 
 

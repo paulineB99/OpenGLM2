@@ -15,14 +15,14 @@ var listeImage = [] // ["cerveau/023.gif", "cerveau/024.gif", "cerveau/025.gif",
 var listeTexture = [];
 var dzPos = 0.02;
 var alpha = 0.5;
+var choixContour = 0.0;
 
 // =====================================================
-function getImages(dir, fileExtension, firstImg, nbImg){
+function getImages(dir, fileExtension, name, firstImg, nbImg){
 
 	for (i=firstImg; i <(nbImg+firstImg); i++){
-		path = dir + "/" + i + fileExtension;
+		path = dir + name + i + fileExtension;
 		listeImage.push(path);
-		console.log(path);
 	}
 }
 
@@ -38,7 +38,7 @@ function webGLStart() {
 	initGL(canvas);
 	initBuffers();
 
-	getImages("cerveau", ".gif", 23, 25);
+	getImages("image-00344", ".jpg", "/image-00", 000, 361);
     
     for (i=0; i<listeImage.length; i++){ 
         listeTexture.push(gl.createTexture());
@@ -197,6 +197,7 @@ function initShaders(vShaderTxt,fShaderTxt) {//il doit lire les 2 fichiers sur l
 	
 	shaderProgram.zPosUniform = gl.getUniformLocation(shaderProgram, "uzPos");
 	shaderProgram.alphaUniform = gl.getUniformLocation(shaderProgram, "uAlpha");
+	shaderProgram.choixContourUniform = gl.getUniformLocation(shaderProgram, "uChoixContour");
 	
 	gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
 	gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute,
@@ -216,6 +217,7 @@ function setMatrixUniforms(zPos) {
 		gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, mvMatrix);
 		gl.uniform1f(shaderProgram.zPosUniform, zPos);
 		gl.uniform1f(shaderProgram.alphaUniform, alpha);
+		gl.uniform1f(shaderProgram.choixContourUniform, choixContour);
 	}
 }
 
@@ -237,6 +239,12 @@ function alpha_slider(){
 	}
 	drawScene();
 }
+
+function setChoixContour(value){
+    choixContour = value;
+	drawScene();
+}
+
 // =====================================================
 function drawScene() {
 	gl.clear(gl.COLOR_BUFFER_BIT);
