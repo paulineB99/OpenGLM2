@@ -14,9 +14,14 @@
 
 
 <body onload="webGLStart();">
-	<canvas id="WebGL-test" style="border:none;" width="600" height="600"></canvas>
-	<br><br>
-	<button type="button" onclick="loadShaders('shader')">Load Shaders</button>
+	<table>
+		<tr>
+			<th>
+				<canvas id="WebGL-test" style="border:none;" width="600" height="600"></canvas>
+			</th>
+			<th>
+				<input type="range" min="0.001" max="0.25" step="0.001" onclick="space_slider()" value="0.02" class="slider" id="Espacement">
+			</th>
 </body>
 
 

@@ -17,6 +17,7 @@ var dzPos = 0.02;
 
 
 
+
 // =====================================================
 function webGLStart() {
 	var canvas = document.getElementById("WebGL-test");
@@ -204,12 +205,22 @@ function setMatrixUniforms(zPos) {
 	}
 }
 
+
+function space_slider(){
+	var spaceSlider = document.getElementById("Espacement");
+	dzPos = parseFloat(spaceSlider.value);
+	spaceSlider.oninput = function(){
+		dzPos = parseFloat(this.value);
+	}
+	drawScene();
+}
 // =====================================================
 function drawScene() {
 	gl.clear(gl.COLOR_BUFFER_BIT);
+	
 
 	if(shaderProgram != null) {
-		zPos = -(listeImage.length/2*dzPos);
+		zPos = -((listeImage.length/2)*dzPos);
 		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
 		//gl.bindTexture(gl.TEXTURE_2D, listeTexture[0]);
         mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
@@ -222,7 +233,7 @@ function drawScene() {
 		//gl.drawElements(gl.TRIANGLE_FAN, indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
 		//gl.drawElements(gl.TRIANGLES, indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
 		//gl.drawArrays(gl.TRIANGLE_FAN, 0, vertexBuffer.numItems);
-
+		console.log(dzPos);
 		for (i=0; i<listeImage.length; i++){
 			
 			gl.bindTexture(gl.TEXTURE_2D, listeTexture[i]);
