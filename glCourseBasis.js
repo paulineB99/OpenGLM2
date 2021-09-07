@@ -24,7 +24,17 @@ var seuil = -1.0;
 function getImages(dir, fileExtension, name, firstImg, nbImg){
 
 	for (i=firstImg; i <(nbImg+firstImg); i++){
-		path = dir + name + i + fileExtension;
+		zeros = "";
+		if (i<10){
+			zeros = "00";
+		}
+		else if (i<100){
+			zeros = "0";
+		}
+		else{
+			zeros = "";
+		}
+		path = dir + "/" + name + zeros + i + fileExtension;
 		listeImage.push(path);
 	}
 }
@@ -43,13 +53,14 @@ function webGLStart() {
 	distCENTER = vec3.create([0,-0.2,-3]);
 	initBuffers();
 
-	getImages("image-00344", ".jpg", "/image-00", 000, 361);
+	getImages("image-00344", ".jpg", "image-00", 0, 361);
     
     for (i=0; i<listeImage.length; i++){ 
         listeTexture.push(gl.createTexture());
         initTexture(listeImage[i], listeTexture[i]);
     }
 	loadShaders('shader');
+	console.log("nb images : " + listeImage.length);
 
 	gl.clearColor(0.7, 0.7, 0.7, 1.0);
 	gl.enable(gl.DEPTH_TEST); //initialisation de la profondeur
