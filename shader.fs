@@ -7,7 +7,7 @@ uniform float uChoixContour;
 uniform float uChoixColor;
 uniform float uSeuil;
 uniform vec3 uColor;
-
+ 
 uniform sampler2D uSampler;//texture que je veux manipuler
 
 void main(void) {
