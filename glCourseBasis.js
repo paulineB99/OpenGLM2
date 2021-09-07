@@ -382,7 +382,7 @@ function drawScene() {
         mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
 
 		setMatrixUniforms(zPos);
-		console.log(seuil);
+		//console.log(seuil);
 
 		for (i=0; i<listeImage.length; i++){
 			

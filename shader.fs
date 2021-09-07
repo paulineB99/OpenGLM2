@@ -13,37 +13,36 @@ uniform sampler2D uSampler;//texture que je veux manipuler
 
 void main(void) {
     //gl_FragColor = vec4(texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r);
-    if (uSeuil != -1.0 && uSeuil>texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r){
-        gl_FragColor = vec4(0.0);
+    //gl_FragColor = texture2D(uSampler, vec2(tCoords.s, tCoords.t));
+    if (uChoixColor == 0.0){ // surement à mettre dans le else au dessus
+        gl_FragColor = vec4(texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r);
+    } else if (uChoixColor == 1.0){
+        gl_FragColor = texture2D(uSampler, vec2(tCoords.s, tCoords.t));
     } else {
-        //gl_FragColor = texture2D(uSampler, vec2(tCoords.s, tCoords.t));
-        if (uChoixColor == 0.0){ // surement à mettre dans le else au dessus
-            gl_FragColor = vec4(texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r);
-        } else if (uChoixColor == 1.0){
-            gl_FragColor = texture2D(uSampler, vec2(tCoords.s, tCoords.t));
+        if (texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r < 0.2){
+            gl_FragColor = vec4(uColors[0], 1);
+        }else if (texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r < 0.4){
+            gl_FragColor = vec4(uColors[1], 1);
+        }else if (texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r < 0.6){
+            gl_FragColor = vec4(uColors[2], 1);
+        }else if (texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r < 0.8){
+            gl_FragColor = vec4(uColors[3], 1);
         } else {
-            if (texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r < 0.2){
-                gl_FragColor = vec4(uColors[0], 1);
-            }else if (texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r < 0.4){
-                gl_FragColor = vec4(uColors[1], 1);
-            }else if (texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r < 0.6){
-                gl_FragColor = vec4(uColors[2], 1);
-            }else if (texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r < 0.8){
-                gl_FragColor = vec4(uColors[3], 1);
-            } else {
-                gl_FragColor = vec4(uColors[4], 1);
-            }
-            //gl_FragColor = fakeColors();
+            gl_FragColor = vec4(uColors[4], 1);
         }
     }
 
     //on peut peut-être mettre direct "tCoord" à la place de "vec2(tCoords.s, tCoords.t)"
-    if (uChoixContour == 0.0) {
-        //on peut peut-être mettre direct "tCoord" à la place de "vec2(tCoords.s, tCoords.t)"
-        gl_FragColor.a =  texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r * uAlpha;
-    }
-    else {
-        gl_FragColor.a =  uAlpha;
+    if (uSeuil > -0.1 && uSeuil<texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r){
+        if (uChoixContour == 0.0) {
+            //on peut peut-être mettre direct "tCoord" à la place de "vec2(tCoords.s, tCoords.t)"
+            gl_FragColor.a =  texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r * uAlpha;
+        }
+        else {
+            gl_FragColor.a =  uAlpha;
+        }
+    } else {
+        gl_FragColor.a = 0.0;
     }
 }
 
