@@ -68,29 +68,29 @@
 				<div>
 					<h4>Seuillage</h4>
 					<input type="checkbox" id="seuil_checkbox" name="seuil" onclick="seuil_checkbox()">
-					<input type="range" min=min="0.0" max="1.01" step="0.01" onclick="seuil_checkbox()" value="0.02" class="slider" id="seuillage">
+					<input type="range" min="0.0" max="1.01" step="0.01" onclick="seuil_checkbox()" value="0.02" class="slider" id="seuillage">
 				</div>
 			</th>
 			<th>
 				<h4>Gestion des fausses couleurs</h4> 
 				<p style= "padding-left: 5px; display:inline-block;">Couleur pour inf 0.2 : </p>
-    			<input type="color" value="#ff5733"  id="color0" oninput="setColor()">
+    			<input type="color" value="#ff5733"  id="0color" oninput="setColor(id)">
 
 				<br>
 				<p style= "padding-left: 5px; display:inline-block;">Couleur pour inf 0.4 : </p>
-    			<input type="color" value="#ff5733"  id="color1" oninput="setColor()">
+    			<input type="color" value="#ff5733"  id="1color" oninput="setColor(id)">
 
 				<br>
 				<p style= "padding-left: 5px; display:inline-block;">Couleur pour inf 0.6 : </p>
-    			<input type="color" value="#ff5733"  id="color2" oninput="setColor()">
+    			<input type="color" value="#ff5733"  id="2color" oninput="setColor(id)">
 
 				<br>
 				<p style= "padding-left: 5px; display:inline-block;">Couleur pour inf 0.8 : </p>
-    			<input type="color" value="#ff5733"  id="color3" oninput="setColor()">
+    			<input type="color" value="#ff5733"  id="3color" oninput="setColor(id)">
  
 				<br>
 				<p style= "padding-left: 5px; display:inline-block;">Couleur pour le reste : </p>
-    			<input type="color" value="#ff5733"  id="color4" oninput="setColor()">
+    			<input type="color" value="#ff5733"  id="4color" oninput="setColor(id)">
 			</th>
         </tr>
     </table>

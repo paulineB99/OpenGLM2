@@ -7,6 +7,7 @@ uniform float uChoixContour;
 uniform float uChoixColor;
 uniform float uSeuil;
 uniform vec3 uColor;
+uniform vec3 uColors[15];
  
 uniform sampler2D uSampler;//texture que je veux manipuler
 
@@ -22,15 +23,15 @@ void main(void) {
             gl_FragColor = texture2D(uSampler, vec2(tCoords.s, tCoords.t));
         } else {
             if (texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r < 0.2){
-                gl_FragColor = vec4(0.8, 0.4, 0.1, 1);
+                gl_FragColor = vec4(uColors[0], 1);
             }else if (texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r < 0.4){
-                gl_FragColor = vec4(uColor, 1);
+                gl_FragColor = vec4(uColors[1], 1);
             }else if (texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r < 0.6){
-                gl_FragColor = vec4(0.4, 0.4, 0.3, 1);
+                gl_FragColor = vec4(uColors[2], 1);
             }else if (texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r < 0.8){
-                gl_FragColor = vec4(uColor, 1);
+                gl_FragColor = vec4(uColors[3], 1);
             } else {
-                gl_FragColor = vec4(0.1, 0.1, 0.8, 1);
+                gl_FragColor = vec4(uColors[4], 1);
             }
             //gl_FragColor = fakeColors();
         }
