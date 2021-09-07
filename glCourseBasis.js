@@ -20,9 +20,15 @@ var choixColor = 0.0;
 var distCENTER;
 var posCENTER = [0,0,0];
 var seuil = -1.0;
+var color = [
+	0.8, 0.8, 0.1, 
+	0.1, 0.8, 0.1, 
+	0.6, 0.1, 0.1, 
+	0.1, 0.1, 0.8, 
+	0.1, 0.8, 0.1
+];
+var color1 = [0.8, 0.8, 0.1];
 var slide = -1;
-var color = [[0.8,0.8,0.1], [0.1,0.8,0.1], [0.6,0.1,0.1], [0.1,0.1,0.8], [[0.1,0.8,0.1]]];
-var color1 = [0.1,0.8,0.1];
 
 
 // if(document.getElementById("red").checked) {
@@ -84,7 +90,7 @@ function webGLStart() {
         initTexture(listeImage[i], listeTexture[i]);
     }
 	loadShaders('shader');
-	console.log("nb images : " + listeImage.length);
+	//console.log("nb images : " + listeImage.length);
 
 	gl.clearColor(0.7, 0.7, 0.7, 1.0);
 	gl.enable(gl.DEPTH_TEST); //initialisation de la profondeur
@@ -242,6 +248,7 @@ function initShaders(vShaderTxt,fShaderTxt) {//il doit lire les 2 fichiers sur l
 	shaderProgram.choixColorUniform = gl.getUniformLocation(shaderProgram, "uChoixColor");
 	shaderProgram.seuilUniform = gl.getUniformLocation(shaderProgram, "uSeuil");
 	shaderProgram.colorUniform = gl.getUniformLocation(shaderProgram, "uColor"); 
+	shaderProgram.colorsUniform = gl.getUniformLocation(shaderProgram, "uColors"); 
 	
 	gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
 	gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute,
@@ -270,6 +277,7 @@ function setMatrixUniforms(zPos) {
 		gl.uniform1f(shaderProgram.choixColorUniform, choixColor);
 		gl.uniform1f(shaderProgram.seuilUniform, seuil);
 		gl.uniform3fv(shaderProgram.colorUniform, color1);
+		gl.uniform3fv(shaderProgram.colorsUniform, color);
 	}
 }
 
@@ -315,14 +323,42 @@ function seuil_checkbox(){
 	drawScene();
 }
 
-function setColor()
+function hex2rgb(hex) 
+{
+   // long version
+   var r = hex.match(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i);
+   if (r) {
+           return r.slice(1,4).map(function(x) { return parseInt(x, 16); });
+   }
+   // short version
+   var r = hex.match(/^#([0-9a-f])([0-9a-f])([0-9a-f])$/i);
+   if (r) {
+           return r.slice(1,4).map(function(x) { return 0x11 * parseInt(x, 16); });
+   }
+}
+
+function setColor(id)
 {   
-    var colorPicker = document.getElementById("color2");
+	console.log("dans setColor");
+    var colorPicker = document.getElementById(id);
+	console.log(colorPicker);
+	//num = id[5];
+	i = parseInt(id);
+	console.log(id);
+	console.log(i);
+
     if (colorPicker.value!=null){
         var convertedColor = hex2rgb(colorPicker.value);
-        color1 = [convertedColor[0]/255,convertedColor[1]/255 ,convertedColor[2]/255];
+		setColorby3(i, convertedColor[0]/255, convertedColor[1]/255, convertedColor[2]/255);
     }
-    
+	drawScene();
+}
+
+function setColorby3(i, r, g, b)
+{
+	color[i*3] = r;
+	color[i*3+1] = g;
+	color[i*3+2] = b;
 }
 function slideByslide(){
 	if(document.getElementById("slideByslideBox").checked){
