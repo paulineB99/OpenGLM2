@@ -56,7 +56,7 @@ function getImages(dir, fileExtension, name, firstImg, nbImg){
 		path = dir + "/" + name + zeros + i + fileExtension;
 		//path = dir + "/" + name + i + fileExtension;
 		listeImage.push(path);
-		console.log(path);
+		//console.log(path);
 	}
 }
 
@@ -346,7 +346,7 @@ function drawScene() {
         mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
 
 		setMatrixUniforms(zPos);
-		console.log(seuil);
+		//console.log(seuil);
 
 		for (i=0; i<listeImage.length; i++){
 			
