@@ -13,11 +13,12 @@ var objMatrix = mat4.create();
 mat4.identity(objMatrix);
 var listeImage = [] // ["cerveau/023.gif", "cerveau/024.gif", "cerveau/025.gif", "cerveau/026.gif", "cerveau/027.gif", "cerveau/028.gif", "cerveau/029.gif", "cerveau/030.gif", "cerveau/031.gif"];
 var listeTexture = [];
-var dzPos = 0.02;
+var dzPos = 0.005;
 var alpha = 0.5;
 var choixContour = 0.0;
 var distCENTER;
 var posCENTER = [0,0,0];
+var seuil = -1.0;
 
 // =====================================================
 function getImages(dir, fileExtension, name, firstImg, nbImg){
@@ -202,6 +203,7 @@ function initShaders(vShaderTxt,fShaderTxt) {//il doit lire les 2 fichiers sur l
 	shaderProgram.zPosUniform = gl.getUniformLocation(shaderProgram, "uzPos");
 	shaderProgram.alphaUniform = gl.getUniformLocation(shaderProgram, "uAlpha");
 	shaderProgram.choixContourUniform = gl.getUniformLocation(shaderProgram, "uChoixContour");
+	shaderProgram.seuilUniform = gl.getUniformLocation(shaderProgram, "uSeuil");
 	
 	gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
 	gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute,
@@ -227,6 +229,7 @@ function setMatrixUniforms(zPos) {
 		gl.uniform1f(shaderProgram.zPosUniform, zPos);
 		gl.uniform1f(shaderProgram.alphaUniform, alpha);
 		gl.uniform1f(shaderProgram.choixContourUniform, choixContour);
+		gl.uniform1f(shaderProgram.seuilUniform, seuil)
 	}
 }
 
@@ -241,9 +244,9 @@ function space_slider(){
 }
 
 function alpha_slider(){
-	var alpheSlider = document.getElementById("Transparence");
-	alpha = parseFloat(alpheSlider.value);
-	alpheSlider.oninput = function(){
+	var alphaSlider = document.getElementById("Transparence");
+	alpha = parseFloat(alphaSlider.value);
+	alphaSlider.oninput = function(){
 		alpha = parseFloat(this.value);
 	}
 	drawScene();
@@ -253,6 +256,29 @@ function setChoixContour(value){
     choixContour = value;
 	drawScene();
 }
+
+function seuil_checkbox(){
+	if(document.getElementById("seuil_checkbox").checked){
+		var seuilSlider = document.getElementById("seuillage");
+		seuil = parseFloat(seuilSlider.value);
+		seuilSlider.oninput = function(){
+			seuil = parseFloat(this.value);
+		}
+	}else{
+		seuil = -1.0;
+	}
+	drawScene();
+}
+
+// function seuil_checkbox(){
+// 	if(document.getElementById("seuil_checkbox").checked){ 
+// 		seuil = 0.0;
+// 		seuil_slider();
+// 	}else{
+// 		seuil = -1.0;
+// 	}
+// 	drawScene();
+// }
 
 // =====================================================
 function drawScene() {
@@ -266,6 +292,7 @@ function drawScene() {
         mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
 
 		setMatrixUniforms(zPos);
+		console.log(seuil);
 
 		for (i=0; i<listeImage.length; i++){
 			

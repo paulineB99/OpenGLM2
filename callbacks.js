@@ -38,7 +38,7 @@ function degToRad(degrees) {
 // =====================================================
 function handleMouseWheel(event) {
 
-	distCENTER[2] += event.deltaY/100.0;
+	distCENTER[2] -= event.deltaY/100.0;
 }
 
 // =====================================================
