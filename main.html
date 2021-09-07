@@ -29,16 +29,17 @@
 				<table>
 					<tr>
 						<th style = text-align:left>
-					<div style = margin-left:30px>
-						<div>
-							<input type="radio" id="notShow" name="obj" value="0.0" oninput="setChoixContour(this.value)" style = text-align:center>
-							<label for="notShow">Ne pas afficher le noir</label>
-						</div>
-						<div>
-							<input type="radio" id="show" name="obj" value="1.0" oninput="setChoixContour(this.value)" style = text-align:right>
-							<label for="show">Afficher le noir</label>
-						</div>
-					</div></th>
+							<div style = margin-left:30px>
+								<div>
+									<input type="radio" id="show" name="show" value="0.0" oninput="setChoixContour(this.value)" checked="yes" style = text-align:center>
+									<label for="notShow">Ne pas afficher le noir</label>
+								</div>
+								<div>
+									<input type="radio" id="show" name="show" value="1.0" oninput="setChoixContour(this.value)" style = text-align:right>
+									<label for="show">Afficher le noir</label>
+								</div>
+							</div>
+						</th>
 					</tr>
 				</table>
 
@@ -48,15 +49,15 @@
 						<th style = text-align:left>
 							<div style = margin-left:30px>
 								<div>
-									<input type="radio" id="notShow" name="obj" value="0.0" oninput="setChoixContour(this.value)" style = text-align:center>
-									<label for="color">En couleur</label>
-								</div>
-								<div>
-									<input type="radio" id="show" name="obj" value="1.0" oninput="setChoixContour(this.value)" style = text-align:right>
+									<input type="radio" id="color" name="color" value="0.0" oninput="setChoixColor(this.value)" checked="yes" style = text-align:right>
 									<label for="blackandwhite">En noir et blanc</label>
 								</div>
 								<div>
-									<input type="radio" id="show" name="obj" value="1.0" oninput="setChoixContour(this.value)" style = text-align:right>
+									<input type="radio" id="color" name="color" value="1.0" oninput="setChoixColor(this.value)" style = text-align:center>
+									<label for="color">En couleur</label>
+								</div>
+								<div>
+									<input type="radio" id="color" name="color" value="0.5" oninput="setChoixColor(this.value)" style = text-align:right>
 									<label for="fakecolors">En fausses couleurs</label>
 								</div>
 							</div>
@@ -69,6 +70,27 @@
 					<input type="checkbox" id="seuil_checkbox" name="seuil" onclick="seuil_checkbox()">
 					<input type="range" min=min="0.0" max="1.01" step="0.01" onclick="seuil_checkbox()" value="0.02" class="slider" id="seuillage">
 				</div>
+			</th>
+			<th>
+				<h4>Gestion des fausses couleurs</h4> 
+				<p style= "padding-left: 5px; display:inline-block;">Couleur pour inf 0.2 : </p>
+    			<input type="color" value="#ff5733"  id="color0" oninput="setColor()">
+
+				<br>
+				<p style= "padding-left: 5px; display:inline-block;">Couleur pour inf 0.4 : </p>
+    			<input type="color" value="#ff5733"  id="color1" oninput="setColor()">
+
+				<br>
+				<p style= "padding-left: 5px; display:inline-block;">Couleur pour inf 0.6 : </p>
+    			<input type="color" value="#ff5733"  id="color2" oninput="setColor()">
+
+				<br>
+				<p style= "padding-left: 5px; display:inline-block;">Couleur pour inf 0.8 : </p>
+    			<input type="color" value="#ff5733"  id="color3" oninput="setColor()">
+ 
+				<br>
+				<p style= "padding-left: 5px; display:inline-block;">Couleur pour le reste : </p>
+    			<input type="color" value="#ff5733"  id="color4" oninput="setColor()">
 			</th>
         </tr>
     </table>

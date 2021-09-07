@@ -16,9 +16,28 @@ var listeTexture = [];
 var dzPos = 0.005;
 var alpha = 0.5;
 var choixContour = 0.0;
+var choixColor = 0.0;
 var distCENTER;
 var posCENTER = [0,0,0];
 var seuil = -1.0;
+var color = [[0.8,0.8,0.1], [0.1,0.8,0.1], [0.6,0.1,0.1], [0.1,0.1,0.8], [[0.1,0.8,0.1]]];
+var color1 = [0.1,0.8,0.1];
+
+
+// if(document.getElementById("red").checked) {
+// 	kd = [0.6,0.1,0.1];
+// }else if(document.getElementById("green").checked) {
+// 	kd = [0.1,0.8,0.1];
+// }else if(document.getElementById("blue").checked) {
+// 	kd = [0.1,0.1,0.8];
+// }else if(document.getElementById("yellow").checked) {
+// 	kd = [0.8,0.8,0.1];
+// }else if(document.getElementById("cyan").checked) {
+// 	kd = [0.1,0.8,0.8];
+// }else if(document.getElementById("magenta").checked) {
+// 	kd = [0.6,0.1,0.8];
+// }
+
 
 // =====================================================
 function getImages(dir, fileExtension, name, firstImg, nbImg){
@@ -35,7 +54,9 @@ function getImages(dir, fileExtension, name, firstImg, nbImg){
 			zeros = "";
 		}
 		path = dir + "/" + name + zeros + i + fileExtension;
+		//path = dir + "/" + name + i + fileExtension;
 		listeImage.push(path);
+		console.log(path);
 	}
 }
 
@@ -54,6 +75,8 @@ function webGLStart() {
 	initBuffers();
 
 	getImages("image-00344", ".jpg", "image-00", 0, 361);
+	//getImages("images_diverses", ".jfif", "lama", 1, 3);
+	
     
     for (i=0; i<listeImage.length; i++){ 
         listeTexture.push(gl.createTexture());
@@ -121,6 +144,7 @@ function initBuffers() { //c'est la géométrie
 	indexBuffer.itemSize = 1;
 	indexBuffer.numItems = indices.length;
 	
+
 }
 
 
@@ -214,7 +238,9 @@ function initShaders(vShaderTxt,fShaderTxt) {//il doit lire les 2 fichiers sur l
 	shaderProgram.zPosUniform = gl.getUniformLocation(shaderProgram, "uzPos");
 	shaderProgram.alphaUniform = gl.getUniformLocation(shaderProgram, "uAlpha");
 	shaderProgram.choixContourUniform = gl.getUniformLocation(shaderProgram, "uChoixContour");
+	shaderProgram.choixColorUniform = gl.getUniformLocation(shaderProgram, "uChoixColor");
 	shaderProgram.seuilUniform = gl.getUniformLocation(shaderProgram, "uSeuil");
+	shaderProgram.colorUniform = gl.getUniformLocation(shaderProgram, "uColor"); 
 	
 	gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
 	gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute,
@@ -240,7 +266,9 @@ function setMatrixUniforms(zPos) {
 		gl.uniform1f(shaderProgram.zPosUniform, zPos);
 		gl.uniform1f(shaderProgram.alphaUniform, alpha);
 		gl.uniform1f(shaderProgram.choixContourUniform, choixContour);
-		gl.uniform1f(shaderProgram.seuilUniform, seuil)
+		gl.uniform1f(shaderProgram.choixColorUniform, choixColor);
+		gl.uniform1f(shaderProgram.seuilUniform, seuil);
+		gl.uniform3fv(shaderProgram.colorUniform, color1);
 	}
 }
 
@@ -268,6 +296,11 @@ function setChoixContour(value){
 	drawScene();
 }
 
+function setChoixColor(value){
+    choixColor = value;
+	drawScene();
+}
+
 function seuil_checkbox(){
 	if(document.getElementById("seuil_checkbox").checked){
 		var seuilSlider = document.getElementById("seuillage");
@@ -279,6 +312,16 @@ function seuil_checkbox(){
 		seuil = -1.0;
 	}
 	drawScene();
+}
+
+function setColor()
+{   
+    var colorPicker = document.getElementById("color2");
+    if (colorPicker.value!=null){
+        var convertedColor = hex2rgb(colorPicker.value);
+        color1 = [convertedColor[0]/255,convertedColor[1]/255 ,convertedColor[2]/255];
+    }
+    
 }
 
 // function seuil_checkbox(){
