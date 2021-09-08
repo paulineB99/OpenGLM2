@@ -6,6 +6,7 @@ function space_slider(){
 	spaceSlider.oninput = function(){
 		dzPos = parseFloat(this.value);
 	}
+    updateSlider("sliderEspacementAmount", dzPos);
 	drawScene();
 }
 
@@ -15,7 +16,12 @@ function alpha_slider(){
 	alphaSlider.oninput = function(){
 		alpha = parseFloat(this.value);
 	}
+    updateSlider("sliderTransparenceAmount", alpha);
 	drawScene();
+}
+
+function updateSlider(id, newvalue) {
+    document.getElementById(id).innerHTML = newvalue;
 }
 
 function setChoixContour(value){
@@ -38,6 +44,7 @@ function seuil_checkbox(){
 	}else{
 		seuil = -1.0;
 	}
+    updateSlider("sliderSeuillageAmount", seuil);
 	drawScene();
 }
 
