@@ -1,4 +1,7 @@
 
+function updateSlider(id, newvalue) {
+    document.getElementById(id).innerHTML = newvalue;
+}
 
 function space_slider(){
 	var spaceSlider = document.getElementById("Espacement");
@@ -18,10 +21,6 @@ function alpha_slider(){
 	}
     updateSlider("sliderTransparenceAmount", alpha);
 	drawScene();
-}
-
-function updateSlider(id, newvalue) {
-    document.getElementById(id).innerHTML = newvalue;
 }
 
 function setChoixContour(value){
@@ -86,10 +85,61 @@ function setColorby3(i, r, g, b)
 	color[i*3+2] = b;
 }
 
+function slideByslide(){
+	if(document.getElementById("slideByslideBox").checked){
+		var slideSlider = document.getElementById("slideByslideRange");
+		slide = parseFloat(slideSlider.value);
+		slideSlider.oninput = function(){
+			slide = parseFloat(this.value);
+		}
+		s = parseInt(slide);
+		updateSlider("slideByslideRange", s);
+		drawScene();
+	}else{
+		slide = -1;
+	}
+    
+}
+
 function effet_Cool(){
 	if(document.getElementById("effetHolograme").checked){
 		effetHolograme = 1;
 	}else{
 		effetHolograme = 0;
 	}
+}
+
+function initValues(){
+	//Espacement
+	space = 0.02;
+	document.getElementById("Espacement").value = space;
+	updateSlider("sliderEspacementAmount", space);
+
+	//Transparence
+	transp = 0.02;
+	document.getElementById("Transparence").value = transp;
+	updateSlider("sliderTransparenceAmount", transp);
+
+	//Affichage contour
+	document.getElementById("show").value = 0.0;
+	//document.getElementById(show).innerHTML = 0.0;
+
+	//Couleurs des images
+
+	//Seuillage
+	document.getElementById("seuil_checkbox").checked = false;
+	seuil = 0.02;
+	document.getElementById("seuillage").value = seuil;
+	updateSlider("sliderSeuillageAmount", seuil);
+
+	//Gestion des fausses couleurs
+
+	//Vision 2D
+	document.getElementById("slideByslideBox").checked = false;
+	slide = 0;
+	document.getElementById("slideByslideRange").value = slide;
+	updateSlider("sliderslideByslideAmount", slide);
+
+	
+	document.getElementById("effetHolograme").checked = false;
 }

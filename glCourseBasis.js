@@ -116,6 +116,8 @@ function initGL(canvas) //permet de lier carte graph au canva
 	if (!gl) {
 		console.log("Could not initialise WebGL");
 	}
+
+	initValues();
 }
 
 // =====================================================
