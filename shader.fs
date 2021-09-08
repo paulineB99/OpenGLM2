@@ -33,17 +33,23 @@ void main(void) {
     }
 
     //on peut peut-être mettre direct "tCoord" à la place de "vec2(tCoords.s, tCoords.t)"
-    if (uSeuil > -0.1 && uSeuil<texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r){
-        if (uChoixContour == 0.0) {
-            //on peut peut-être mettre direct "tCoord" à la place de "vec2(tCoords.s, tCoords.t)"
+    
+    if (uChoixContour == 0.0) {
+        //on peut peut-être mettre direct "tCoord" à la place de "vec2(tCoords.s, tCoords.t)"
+        if (uSeuil > -0.1 && uSeuil>texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r){ 
+            gl_FragColor.a = 0.0;
+        }else {
             gl_FragColor.a =  texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r * uAlpha;
         }
-        else {
+    }
+    else {
+        if (uSeuil > -0.1 && uSeuil>texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r){ 
+            gl_FragColor.a = 0.0;
+        }else {
             gl_FragColor.a =  uAlpha;
         }
-    } else {
-        gl_FragColor.a = 0.0;
     }
+    
 }
 
 // vec4 fakeColors() {

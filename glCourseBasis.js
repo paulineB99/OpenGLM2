@@ -27,7 +27,8 @@ var color = [
 	0.1, 0.1, 0.8, 
 	0.1, 0.8, 0.1
 ];
-var color1 = [0.0,0.8,0.1];
+var color1 = [0.8, 0.8, 0.1];
+var slide = -1;
 
 
 // if(document.getElementById("red").checked) {
@@ -287,20 +288,27 @@ function drawScene() {
 	
 
 	if(shaderProgram != null) {
-		zPos = -(listeImage.length*0.5*dzPos);
-
 		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
         mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
-
-		setMatrixUniforms(zPos);
-
-		for (i=0; i<listeImage.length; i++){
-			
-			gl.bindTexture(gl.TEXTURE_2D, listeTexture[i]);
-			gl.drawElements(gl.TRIANGLES, indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
-			zPos += dzPos;
+		//console.log(seuil);
+		if(slide == -1){
+			zPos = -(listeImage.length*0.5*dzPos);
+			setMatrixUniforms(zPos);
+			for (i=0; i<listeImage.length; i++){
+				
+				gl.bindTexture(gl.TEXTURE_2D, listeTexture[i]);
+				gl.drawElements(gl.TRIANGLES, indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
+				zPos += dzPos;
+				mat4.translate(mvMatrix, [0.0, 0.0, 0.0]);
+				setMatrixUniforms(zPos);
+			}
+		}else{
+			zPos = 0.0;
 			mat4.translate(mvMatrix, [0.0, 0.0, 0.0]);
 			setMatrixUniforms(zPos);
+			console.log(slide);
+			gl.bindTexture(gl.TEXTURE_2D, listeTexture[slide]);
+			gl.drawElements(gl.TRIANGLES, indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
 		}
 	}
 }

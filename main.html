@@ -69,8 +69,7 @@
 				<div>
 					<h4>Seuillage</h4>
 					<input type="checkbox" id="seuil_checkbox" name="seuil" onclick="seuil_checkbox()">
-					<input type="range" min="0.0" max="1.01" step="0.01" onclick="seuil_checkbox()" value="0.02" class="slider" id="seuillage">
-
+					<input type="range" min="0.0" max="1.0" step="0.01" onclick="seuil_checkbox()" value="0.02" class="slider" id="seuillage">
 				</div>
 			</th>
 			<th>
@@ -93,6 +92,11 @@
 				<br>
 				<p style= "padding-left: 5px; display:inline-block;">Couleur pour le reste : </p>
     			<input type="color" value="#ff5733"  id="4color" oninput="setColor(id)">
+			</th>
+			<th>
+				<h4>Vision 2D</h4>
+				<input type="checkbox", id="slideByslideBox" name="slideByslide" onclick="slideByslide()">
+				<input type="range" min="0" max="360" step="1" onclick="slideByslide()" value="0" id="slideByslideRange">
 			</th>
         </tr>
     </table>
