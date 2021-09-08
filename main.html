@@ -105,11 +105,17 @@
 			</th>
 			<th>
 				<h4>Vision 2D</h4>
-				<input type="checkbox", id="slideByslideBox" name="slideByslide" onclick="slideByslide()">
+				<input type="checkbox" id="slideByslideBox" name="slideByslide" onclick="slideByslide()">
 				<input type="range" min="0" max="360" step="1" onclick="slideByslide()" value="0" id="slideByslideRange">
+
 				<br>
 				<span id="sliderslideByslideAmount"></span>
 				<script>document.getElementById("sliderslideByslideAmount").innerHTML = slideByslideBox.value;</script>
+
+				<br><br>
+				<h4>Effet Holograme: </h4>
+				<input type="checkbox" id="effetHolograme" name="effetHolograme" onclick="effet_Cool()">
+
 			</th>
         </tr>
     </table>

@@ -85,3 +85,11 @@ function setColorby3(i, r, g, b)
 	color[i*3+1] = g;
 	color[i*3+2] = b;
 }
+
+function effet_Cool(){
+	if(document.getElementById("effetHolograme").checked){
+		effetHolograme = 1;
+	}else{
+		effetHolograme = 0;
+	}
+}
