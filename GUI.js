@@ -168,4 +168,7 @@ function initValues(){
 	document.getElementById("2color").value = "#7f3300";
 	document.getElementById("3color").value = "#1919cc";
 	document.getElementById("4color").value = "#7f0033";
+
+	document.getElementById("blackaAndWhite").checked = true;
+	document.getElementById("notShow").checked = true;
 }
