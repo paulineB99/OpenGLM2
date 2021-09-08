@@ -35,7 +35,6 @@ var hologramEffect = 0;
 
 // =====================================================
 function getImages(dir, fileExtension, name, firstImg, nbImg){
-
 	for (i=firstImg; i <(nbImg+firstImg); i++){
 		zeros = "";
 		if (i<10){
@@ -68,13 +67,11 @@ function webGLStart() {
 
 	getImages("image-00344", ".jpg", "image-00", 0, 361);
 	
-    
     for (i=0; i<listImage.length; i++){ 
         listTexture.push(gl.createTexture());
         initTexture(listImage[i], listTexture[i]);
     }
 	loadShaders('shader');
-
 
 	gl.clearColor(0.7, 0.7, 0.7, 1.0);
 	gl.enable(gl.DEPTH_TEST);
@@ -167,8 +164,8 @@ function loadShaders(shader) {//charge les shader .vs et .fs
 
 // =====================================================
 function loadShaderText(filename,ext) {   // technique car lecture asynchrone...
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
     if (xhttp.readyState == 4 && xhttp.status == 200) {
 			if(ext=='.vs') { vertShaderTxt = xhttp.responseText; shadersLoaded ++; }
 			if(ext=='.fs') { fragShaderTxt = xhttp.responseText; shadersLoaded ++; }
@@ -177,9 +174,9 @@ function loadShaderText(filename,ext) {   // technique car lecture asynchrone...
 				shadersLoaded=0;
 			}
     }
-  }
-  xhttp.open("GET", filename+ext, true);
-  xhttp.send();
+    }
+    xhttp.open("GET", filename+ext, true);
+    xhttp.send();
 }
 
 // =====================================================
