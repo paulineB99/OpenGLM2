@@ -29,6 +29,7 @@ var color = [
 ];
 var color1 = [0.8, 0.8, 0.1];
 var slide = -1;
+var effetHolograme = 0;
 
 
 // if(document.getElementById("red").checked) {
@@ -249,7 +250,8 @@ function initShaders(vShaderTxt,fShaderTxt) {//il doit lire les 2 fichiers sur l
 	shaderProgram.seuilUniform = gl.getUniformLocation(shaderProgram, "uSeuil");
 	shaderProgram.colorUniform = gl.getUniformLocation(shaderProgram, "uColor"); 
 	shaderProgram.colorsUniform = gl.getUniformLocation(shaderProgram, "uColors"); 
-	
+	shaderProgram.effetHologrameUniform = gl.getUniformLocation(shaderProgram, "uEffetHolograme");
+
 	gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
 	gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute,
     	vertexBuffer.itemSize, gl.FLOAT, false, 0, 0);
@@ -278,6 +280,7 @@ function setMatrixUniforms(zPos) {
 		gl.uniform1f(shaderProgram.seuilUniform, seuil);
 		gl.uniform3fv(shaderProgram.colorUniform, color1);
 		gl.uniform3fv(shaderProgram.colorsUniform, color);
+		gl.uniform1i(shaderProgram.effetHologrameUniform, effetHolograme);
 	}
 }
 
@@ -374,6 +377,13 @@ function slideByslide(){
 
 }
 
+function effet_Cool(){
+	if(document.getElementById("effetHolograme").checked){
+		effetHolograme = 1;
+	}else{
+		effetHolograme = 0;
+	}
+}
 // =====================================================
 function drawScene() {
 	gl.clear(gl.COLOR_BUFFER_BIT);
@@ -382,6 +392,9 @@ function drawScene() {
 	if(shaderProgram != null) {
 		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
         mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
+		mat4.identity(objMatrix);
+		mat4.rotate(objMatrix, rotX, [1, 0, 0]);
+		mat4.rotate(objMatrix, rotY, [0, 1, 0]);
 		//console.log(seuil);
 		if(slide == -1){
 			zPos = -(listeImage.length*0.5*dzPos);

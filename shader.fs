@@ -8,6 +8,7 @@ uniform float uChoixColor;
 uniform float uSeuil;
 uniform vec3 uColor;
 uniform vec3 uColors[15];
+uniform int uEffetHolograme;
  
 uniform sampler2D uSampler;//texture que je veux manipuler
 
@@ -48,6 +49,11 @@ void main(void) {
         }else {
             gl_FragColor.a =  uAlpha;
         }
+    }
+
+    if (uEffetHolograme == 1){
+        gl_FragColor = vec4(0.0);
+        gl_FragColor.a =  texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r;
     }
     
 }
