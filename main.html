@@ -76,10 +76,12 @@
 				<div>
 					<h4>Seuillage</h4>
 					<input type="checkbox" id="threshold_checkbox" name="threshold" onclick="threshold_checkbox()">
-					<input type="range" min="0.0" max="1.0" step="0.01" onclick="threshold_checkbox()" value="0.02" class="slider" id="threshold">
-					<br>
-					<span id="sliderThresholdAmount"></span>
-					<script>document.getElementById("sliderThresholdAmount").innerHTML = threshold_checkbox.value;</script>
+					<div id="divThreshold">
+						<input type="range" min="0.0" max="1.0" step="0.01" onclick="threshold_checkbox()" value="0.02" class="slider" id="threshold">
+						<br>
+						<span id="sliderThresholdAmount"></span>
+						<script>document.getElementById("sliderThresholdAmount").innerHTML = threshold_checkbox.value;</script>
+					</div>
 				</div>
 			</th>
 			<th>

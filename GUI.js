@@ -36,12 +36,17 @@ function setColorChoice(value){
 
 function threshold_checkbox(){
 	if(document.getElementById("threshold_checkbox").checked){
+		//document.getElementById("DvHP").style.visibility = "Visible";
 		var thresholdSlider = document.getElementById("threshold");
+		thresholdSlider.style.visibility = "Visible";
+		document.getElementById("sliderThresholdAmount").style.visibility = "Visible";
 		threshold = parseFloat(thresholdSlider.value);
 		thresholdSlider.oninput = function(){
 			threshold = parseFloat(this.value);
 		}
 	}else{
+		document.getElementById("threshold").style.visibility = "hidden";
+		document.getElementById("sliderThresholdAmount").style.visibility = "hidden";
 		threshold = -1.0;
 	}
     updateSlider("sliderThresholdAmount", threshold);
@@ -122,7 +127,7 @@ function initValues(){
 	updateSlider("sliderTransparenceAmount", transp);
 
 	//Affichage contour
-	document.getElementById("show").value = 0.0;
+	document.getElementById("show").value = false;
 	//document.getElementById(show).innerHTML = 0.0;
 
 	//Couleurs des images
@@ -132,6 +137,8 @@ function initValues(){
 	threshold = -1.0;
 	document.getElementById("threshold").value = threshold;
 	updateSlider("sliderThresholdAmount", threshold);
+	document.getElementById("threshold").style.visibility = "hidden";
+	document.getElementById("sliderThresholdAmount").style.visibility = "hidden";
 
 	//Gestion des fausses couleurs
 
