@@ -31,6 +31,11 @@ function setEdge(value){
 
 function setColorChoice(value){
     colorChoice = value;
+	if (colorChoice == 0.5){
+		document.getElementById("thFakeColors").style.visibility = "Visible";
+	}else {
+		document.getElementById("thFakeColors").style.visibility = "hidden";
+	}
 	drawScene();
 }
 
@@ -100,9 +105,13 @@ function slideByslide(){
 		}
 		s = parseInt(slide);
 		updateSlider("sliderslideByslideAmount", s);
+		document.getElementById("slideByslideRange").style.visibility = "Visible";
+		document.getElementById("sliderslideByslideAmount").style.visibility = "Visible";
 		drawScene();
 	}else{
 		slide = -1;
+		document.getElementById("slideByslideRange").style.visibility = "hidden";
+		document.getElementById("sliderslideByslideAmount").style.visibility = "hidden";
 	}
 
 }
@@ -141,12 +150,15 @@ function initValues(){
 	document.getElementById("sliderThresholdAmount").style.visibility = "hidden";
 
 	//Gestion des fausses couleurs
+	document.getElementById("thFakeColors").style.visibility = "hidden";
 
 	//Vision 2D
 	document.getElementById("slideByslideBox").checked = false;
 	slide = -1;
 	document.getElementById("slideByslideRange").value = slide;
 	updateSlider("sliderslideByslideAmount", slide);
+	document.getElementById("slideByslideRange").style.visibility = "hidden";
+	document.getElementById("sliderslideByslideAmount").style.visibility = "hidden";
 
 	
 	document.getElementById("hologramEffect").checked = false;

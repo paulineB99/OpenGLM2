@@ -21,19 +21,19 @@
 				<canvas id="WebGL-test" style="border:none;" width="600" height="600"></canvas>
 			</th>
 			<th>
-				<h4>Espacement</h4>
+				<h3>Espacement</h3>
 				<input type="range" min="0.001" max="0.25" step="0.001" onclick="space_slider()" value="0.02" class="slider" id="Espacement">
 				<br>
 				<span id="sliderEspacementAmount"></span>
 				<script>document.getElementById("sliderEspacementAmount").innerHTML = Espacement.value;</script>
 
-				<h4>Transparence</h4>
+				<h3>Transparence</h3>
 				<input type="range" min="0.01" max="1" step="0.01" onclick="alpha_slider()" value="0.02" class="slider" id="Transparence">
 				<br>
 				<span id="sliderTransparenceAmount"></span>
 				<script>document.getElementById("sliderTransparenceAmount").innerHTML = Transparence.value;</script>
 
-                <h4>Affichage des contours</h4> 
+                <h3>Affichage des contours</h3> 
 				<table>
 					<tr>
 						<th style = text-align:left>
@@ -51,7 +51,7 @@
 					</tr>
 				</table>
 
-				<h4>Couleurs des images</h4> 
+				<h3>Couleurs des images</h3> 
 				<table>
 					<tr>
 						<th style = text-align:left>
@@ -74,7 +74,7 @@
 				</table>
 
 				<div>
-					<h4>Seuillage</h4>
+					<h3>Seuillage</h3>
 					<input type="checkbox" id="threshold_checkbox" name="threshold" onclick="threshold_checkbox()">
 					<div id="divThreshold">
 						<input type="range" min="0.0" max="1.0" step="0.01" onclick="threshold_checkbox()" value="0.02" class="slider" id="threshold">
@@ -84,8 +84,8 @@
 					</div>
 				</div>
 			</th>
-			<th>
-				<h4>Gestion des fausses couleurs</h4> 
+			<th id="thFakeColors">
+				<h3>Choix des fausses couleurs</h3> 
 				<p style= "padding-left: 5px; display:inline-block;">Couleur pour inf 0.2 : </p>
     			<input type="color" value="#ff5733"  id="0color" oninput="setColor(id)">
 
@@ -106,16 +106,16 @@
     			<input type="color" value="#ff5733"  id="4color" oninput="setColor(id)">
 			</th>
 			<th>
-				<h4>Vision 2D</h4>
+				<h3>Vision 2D</h3>
 				<input type="checkbox" id="slideByslideBox" name="slideByslide" onclick="slideByslide()">
-				<input type="range" min="0" max="360" step="1" onclick="slideByslide()" value="0" id="slideByslideRange">
-
+				<div id="divslideByslideRange">
+					<input type="range" min="0" max="360" step="1" onclick="slideByslide()" value="0" id="slideByslideRange">
+					<br>
+					<span id="sliderslideByslideAmount"></span>
+					<script>document.getElementById("sliderslideByslideAmount").innerHTML = slideByslideRange.value;</script>
+				</div>
 				<br>
-				<span id="sliderslideByslideAmount"></span>
-				<script>document.getElementById("sliderslideByslideAmount").innerHTML = slideByslideRange.value;</script>
-
-				<br><br>
-				<h4>Effet Holograme: </h4>
+				<h3>Effet Holograme: </h3>
 				<input type="checkbox" id="hologramEffect" name="hologramEffect" onclick="hologram_Effect()">
 			</th>
         </tr>
