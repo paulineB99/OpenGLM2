@@ -162,4 +162,10 @@ function initValues(){
 
 	
 	document.getElementById("hologramEffect").checked = false;
+
+	document.getElementById("0color").value = "#000000";
+	document.getElementById("1color").value = "#cccc19";
+	document.getElementById("2color").value = "#7f3300";
+	document.getElementById("3color").value = "#1919cc";
+	document.getElementById("4color").value = "#7f0033";
 }
