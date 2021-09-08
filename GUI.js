@@ -1,4 +1,8 @@
 
+function updateSlider(id, newvalue) {
+    document.getElementById(id).innerHTML = newvalue;
+	drawScene();
+}
 
 function space_slider(){
 	var spaceSlider = document.getElementById("Espacement");
@@ -20,12 +24,9 @@ function alpha_slider(){
 	drawScene();
 }
 
+
 function setEdge(value){
     edge = value;
-}
-function updateSlider(id, newvalue) {
-    document.getElementById(id).innerHTML = newvalue;
-	drawScene();
 }
 
 function setColorChoice(value){
@@ -35,15 +36,20 @@ function setColorChoice(value){
 
 function threshold_checkbox(){
 	if(document.getElementById("threshold_checkbox").checked){
+		//document.getElementById("DvHP").style.visibility = "Visible";
 		var thresholdSlider = document.getElementById("threshold");
+		thresholdSlider.style.visibility = "Visible";
+		document.getElementById("sliderThresholdAmount").style.visibility = "Visible";
 		threshold = parseFloat(thresholdSlider.value);
 		thresholdSlider.oninput = function(){
 			threshold = parseFloat(this.value);
 		}
 	}else{
+		document.getElementById("threshold").style.visibility = "hidden";
+		document.getElementById("sliderThresholdAmount").style.visibility = "hidden";
 		threshold = -1.0;
 	}
-    updateSlider("sliderSeuillageAmount", threshold);
+    updateSlider("sliderThresholdAmount", threshold);
 	drawScene();
 }
 
@@ -92,10 +98,13 @@ function slideByslide(){
 		slideSlider.oninput = function(){
 			slide = parseFloat(this.value);
 		}
+		s = parseInt(slide);
+		updateSlider("sliderslideByslideAmount", s);
 		drawScene();
 	}else{
 		slide = -1;
 	}
+
 }
 
 function hologram_Effect(){
@@ -104,4 +113,41 @@ function hologram_Effect(){
 	}else{
 		hologramEffect = 0;
 	}
+}
+
+function initValues(){
+	//Espacement
+	space = 0.02;
+	document.getElementById("Espacement").value = space;
+	updateSlider("sliderEspacementAmount", space);
+
+	//Transparence
+	transp = 0.02;
+	document.getElementById("Transparence").value = transp;
+	updateSlider("sliderTransparenceAmount", transp);
+
+	//Affichage contour
+	document.getElementById("show").value = false;
+	//document.getElementById(show).innerHTML = 0.0;
+
+	//Couleurs des images
+
+	//Seuillage
+	document.getElementById("threshold_checkbox").checked = false;
+	threshold = -1.0;
+	document.getElementById("threshold").value = threshold;
+	updateSlider("sliderThresholdAmount", threshold);
+	document.getElementById("threshold").style.visibility = "hidden";
+	document.getElementById("sliderThresholdAmount").style.visibility = "hidden";
+
+	//Gestion des fausses couleurs
+
+	//Vision 2D
+	document.getElementById("slideByslideBox").checked = false;
+	slide = -1;
+	document.getElementById("slideByslideRange").value = slide;
+	updateSlider("sliderslideByslideAmount", slide);
+
+	
+	document.getElementById("hologramEffect").checked = false;
 }

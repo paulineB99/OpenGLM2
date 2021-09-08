@@ -98,6 +98,8 @@ function initGL(canvas)
 	if (!gl) {
 		console.log("Could not initialise WebGL");
 	}
+
+	initValues();
 }
 
 // =====================================================
