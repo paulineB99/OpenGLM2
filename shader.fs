@@ -29,16 +29,12 @@ void main(void) {
             gl_FragColor = vec4(uColors[4], 1);
         }
     }
-    if (uEdge == 0.0){
-        if (uThreshold > -0.1 && uThreshold>texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r){ 
-            gl_FragColor.a = 0.0;
-        }else {
+    
+    if (uThreshold > -0.1 && (uThreshold + 0.01) > texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r){ 
+        gl_FragColor.a = 0.0;
+    }else {
+        if (uEdge == 0.0){
             gl_FragColor.a =  texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r * uAlpha;
-        }
-    }
-    else {
-        if (uThreshold > -0.1 && uThreshold>texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r){ 
-            gl_FragColor.a = 0.0;
         }else {
             gl_FragColor.a = uAlpha;
         }
