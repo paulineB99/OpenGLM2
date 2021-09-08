@@ -1,6 +1,7 @@
 
 function updateSlider(id, newvalue) {
     document.getElementById(id).innerHTML = newvalue;
+	drawScene();
 }
 
 function space_slider(){
@@ -23,27 +24,27 @@ function alpha_slider(){
 	drawScene();
 }
 
-function setChoixContour(value){
-    choixContour = value;
+
+function setEdge(value){
+    edge = value;
+}
+
+function setColorChoice(value){
+    colorChoice = value;
 	drawScene();
 }
 
-function setChoixColor(value){
-    choixColor = value;
-	drawScene();
-}
-
-function seuil_checkbox(){
-	if(document.getElementById("seuil_checkbox").checked){
-		var seuilSlider = document.getElementById("seuillage");
-		seuil = parseFloat(seuilSlider.value);
-		seuilSlider.oninput = function(){
-			seuil = parseFloat(this.value);
+function threshold_checkbox(){
+	if(document.getElementById("threshold_checkbox").checked){
+		var thresholdSlider = document.getElementById("threshold");
+		threshold = parseFloat(thresholdSlider.value);
+		thresholdSlider.oninput = function(){
+			threshold = parseFloat(this.value);
 		}
 	}else{
-		seuil = -1.0;
+		threshold = -1.0;
 	}
-    updateSlider("sliderSeuillageAmount", seuil);
+    updateSlider("sliderThresholdAmount", threshold);
 	drawScene();
 }
 
@@ -93,19 +94,19 @@ function slideByslide(){
 			slide = parseFloat(this.value);
 		}
 		s = parseInt(slide);
-		updateSlider("slideByslideRange", s);
+		updateSlider("sliderslideByslideAmount", s);
 		drawScene();
 	}else{
 		slide = -1;
 	}
-    
+
 }
 
-function effet_Cool(){
-	if(document.getElementById("effetHolograme").checked){
-		effetHolograme = 1;
+function hologram_Effect(){
+	if(document.getElementById("hologramEffect").checked){
+		hologramEffect = 1;
 	}else{
-		effetHolograme = 0;
+		hologramEffect = 0;
 	}
 }
 
@@ -127,19 +128,19 @@ function initValues(){
 	//Couleurs des images
 
 	//Seuillage
-	document.getElementById("seuil_checkbox").checked = false;
-	seuil = 0.02;
-	document.getElementById("seuillage").value = seuil;
-	updateSlider("sliderSeuillageAmount", seuil);
+	document.getElementById("threshold_checkbox").checked = false;
+	threshold = -1.0;
+	document.getElementById("threshold").value = threshold;
+	updateSlider("sliderThresholdAmount", threshold);
 
 	//Gestion des fausses couleurs
 
 	//Vision 2D
 	document.getElementById("slideByslideBox").checked = false;
-	slide = 0;
+	slide = -1;
 	document.getElementById("slideByslideRange").value = slide;
 	updateSlider("sliderslideByslideAmount", slide);
 
 	
-	document.getElementById("effetHolograme").checked = false;
+	document.getElementById("hologramEffect").checked = false;
 }

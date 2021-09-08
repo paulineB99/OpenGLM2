@@ -1,23 +1,20 @@
 
 precision mediump float;
 
-varying vec2 tCoords;//on recup tCoord
+varying vec2 tCoords;
+
 uniform float uAlpha;
-uniform float uChoixContour;
-uniform float uChoixColor;
-uniform float uSeuil;
-uniform vec3 uColor;
+uniform float uEdge;
+uniform float uColorChoice;
+uniform float uThreshold;
 uniform vec3 uColors[15];
-uniform int uEffetHolograme;
- 
-uniform sampler2D uSampler;//texture que je veux manipuler
+uniform int uHologramEffect;
+uniform sampler2D uSampler;
 
 void main(void) {
-    //gl_FragColor = vec4(texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r);
-    //gl_FragColor = texture2D(uSampler, vec2(tCoords.s, tCoords.t));
-    if (uChoixColor == 0.0){ // surement à mettre dans le else au dessus
+    if (uColorChoice == 0.0){
         gl_FragColor = vec4(texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r);
-    } else if (uChoixColor == 1.0){
+    } else if (uColorChoice == 1.0){
         gl_FragColor = texture2D(uSampler, vec2(tCoords.s, tCoords.t));
     } else {
         if (texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r < 0.2){
@@ -32,41 +29,19 @@ void main(void) {
             gl_FragColor = vec4(uColors[4], 1);
         }
     }
-
-    //on peut peut-être mettre direct "tCoord" à la place de "vec2(tCoords.s, tCoords.t)"
     
-    if (uChoixContour == 0.0) {
-        //on peut peut-être mettre direct "tCoord" à la place de "vec2(tCoords.s, tCoords.t)"
-        if (uSeuil > -0.1 && uSeuil>texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r){ 
-            gl_FragColor.a = 0.0;
-        }else {
+    if (uThreshold > -0.1 && (uThreshold + 0.01) > texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r){ 
+        gl_FragColor.a = 0.0;
+    }else {
+        if (uEdge == 0.0){
             gl_FragColor.a =  texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r * uAlpha;
-        }
-    }
-    else {
-        if (uSeuil > -0.1 && uSeuil>texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r){ 
-            gl_FragColor.a = 0.0;
         }else {
-            gl_FragColor.a =  uAlpha;
+            gl_FragColor.a = uAlpha;
         }
     }
-
-    if (uEffetHolograme == 1){
+    if (uHologramEffect == 1){
         gl_FragColor = vec4(0.0);
         gl_FragColor.a =  texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r;
     }
     
 }
-
-// vec4 fakeColors() {
-//     if (texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r < 0.2){
-//         gl_FragColor = vec4(0.8, 0.4, 0.1, 1);
-//     }else if (texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r < 0.5){
-//         gl_FragColor = vec4(0.4, 0.4, 0.3, 1);
-//     }else if (texture2D(uSampler, vec2(tCoords.s, tCoords.t)).r < 0.8){
-//         gl_FragColor = vec4(0.1, 0.4, 0.5, 1);
-//     } else {
-//         gl_FragColor = vec4(0.1, 0.1, 0.8, 1);
-//     }
-//     return gl_FragColor;
-// }
