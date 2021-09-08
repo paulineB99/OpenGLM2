@@ -18,25 +18,25 @@ function alpha_slider(){
 	drawScene();
 }
 
-function setChoixContour(value){
-    choixContour = value;
+function setEdge(value){
+    edge = value;
 	drawScene();
 }
 
-function setChoixColor(value){
-    choixColor = value;
+function setColorChoice(value){
+    colorChoice = value;
 	drawScene();
 }
 
-function seuil_checkbox(){
-	if(document.getElementById("seuil_checkbox").checked){
-		var seuilSlider = document.getElementById("seuillage");
-		seuil = parseFloat(seuilSlider.value);
-		seuilSlider.oninput = function(){
-			seuil = parseFloat(this.value);
+function threshold_checkbox(){
+	if(document.getElementById("threshold_checkbox").checked){
+		var thresholdSlider = document.getElementById("threshold");
+		threshold = parseFloat(thresholdSlider.value);
+		thresholdSlider.oninput = function(){
+			threshold = parseFloat(this.value);
 		}
 	}else{
-		seuil = -1.0;
+		threshold = -1.0;
 	}
 	drawScene();
 }
@@ -79,10 +79,23 @@ function setColorby3(i, r, g, b)
 	color[i*3+2] = b;
 }
 
-function effet_Cool(){
-	if(document.getElementById("effetHolograme").checked){
-		effetHolograme = 1;
+function slideByslide(){
+	if(document.getElementById("slideByslideBox").checked){
+		var slideSlider = document.getElementById("slideByslideRange");
+		slide = parseFloat(slideSlider.value);
+		slideSlider.oninput = function(){
+			slide = parseFloat(this.value);
+		}
+		drawScene();
 	}else{
-		effetHolograme = 0;
+		slide = -1;
+	}
+}
+
+function hologram_Effect(){
+	if(document.getElementById("hologramEffect").checked){
+		hologramEffect = 1;
+	}else{
+		hologramEffect = 0;
 	}
 }
