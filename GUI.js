@@ -6,6 +6,7 @@ function space_slider(){
 	spaceSlider.oninput = function(){
 		dzPos = parseFloat(this.value);
 	}
+    updateSlider("sliderEspacementAmount", dzPos);
 	drawScene();
 }
 
@@ -15,11 +16,15 @@ function alpha_slider(){
 	alphaSlider.oninput = function(){
 		alpha = parseFloat(this.value);
 	}
+    updateSlider("sliderTransparenceAmount", alpha);
 	drawScene();
 }
 
 function setEdge(value){
     edge = value;
+}
+function updateSlider(id, newvalue) {
+    document.getElementById(id).innerHTML = newvalue;
 	drawScene();
 }
 
@@ -38,6 +43,7 @@ function threshold_checkbox(){
 	}else{
 		threshold = -1.0;
 	}
+    updateSlider("sliderSeuillageAmount", threshold);
 	drawScene();
 }
 
